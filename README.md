@@ -7,7 +7,7 @@ A yay frontend I made using fzf
 git clone https://github.com/SqarishFlame/pacinstall.git
 
 # Make the files executable
-chmod+x ./install.sh
+chmod +x ./install.sh
 chmod +x ./pacinstall
 
 # Install
