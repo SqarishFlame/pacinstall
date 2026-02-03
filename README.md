@@ -1,6 +1,9 @@
 # pacinstall
 A yay frontend I made using fzf
 
+## Dependencies
+- **fzf**
+
 ## Installation
 ```bash
 # Clone the repo
