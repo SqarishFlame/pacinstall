@@ -3,6 +3,7 @@ A yay frontend I made using fzf
 
 ## Dependencies
 - **fzf**
+- **yay**
 
 ## Installation
 ```bash
