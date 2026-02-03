@@ -1,0 +1,39 @@
+#!/bin/bash
+if [[ "$1" == "upgrade" || "$1" == "-u" ]]; then
+    echo "Performing general upgrade..."
+    yay -Syyu
+    exit 0
+fi
+
+pacinstall=$(yay -Slq | fzf -m --bind 'ctrl-space:toggle' --preview 'yay -Si {1}' --preview-window=down:50%:wrap --height=100% --border)
+
+if [ ! -z "$pacinstall" ]; then
+    # Clean up any leading or trailing spaces from the selection
+    pacinstall=$(echo "$pacinstall" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+    # Check if the selected package(s) are already installed using yay
+    for package in $pacinstall; do
+        if yay -Qq | grep -q "^$package$"; then
+            echo "$package is already installed."
+            read -p "Do you want to (u)pdate or (r)emove it? " choice
+
+            case "$choice" in
+                [Uu]* ) 
+                    echo "Updating $package..."
+                    yay -S --noconfirm "$package"
+                    ;;
+                [Rr]* )
+                    echo "Removing $package..."
+                    yay -Rns --noconfirm "$package"
+                    ;;
+                * )
+                    echo "No changes made for $package."
+                    ;;
+            esac
+        else
+            echo "Installing $package..."
+            yay -S --noconfirm "$package"
+        fi
+    done
+fi
+unset pacinstall
